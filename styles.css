@@ -1,0 +1,30 @@
+
+
+/* Fixe la navbar en haut avec un fond blanc */
+.navbar {
+    background-color: white; /* Fond blanc */
+    position: fixed; /* Position fixe */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Hauteur de la navbar */
+    display: flex;
+    justify-content: center; /* Centrer les éléments horizontalement */
+    align-items: center; /* Centrer les éléments verticalement */
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+}
+
+/* Style pour les éléments de la navbar */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Centrer le bouton menu mobile */
+.navbar-toggler {
+    margin: auto;
+}
+main {
+	padding-top: 70px; /* Espace pour éviter que le contenu passe sous la navbar (50px + marge) */

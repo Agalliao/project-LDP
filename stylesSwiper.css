@@ -1,0 +1,53 @@
+.swiper-slide {
+  text-align: center;
+}
+
+.swiper-slide img {
+  width: 100%; /* Largeur à 100% pour qu'elles occupent toute la largeur du slide */
+  height: 700px; /* Hauteur fixe pour l'image */
+  object-fit: cover; /* Permet de couvrir l'espace sans déformation */
+  border-radius: 10px; /* Bordure arrondie */
+}
+
+h5 {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+
+}
+
+.swiper-button-next {
+  right: 10px; /* Position de la flèche suivante */
+}
+
+.swiper-button-prev {
+  left: 10px; /* Position de la flèche précédente */
+}
+
+
+@media (max-width: 768px) {
+  .swiper-slide img {
+    height: 150px; /* Réduire la hauteur pour les tablettes */
+  }
+}
+
+@media (max-width: 480px) {
+  .swiper-slide img {
+    height: 120px; /* Réduire encore la hauteur pour les petits écrans */
+  }
+}
+
+section {
+  padding-top: 100px;  /* Ajuste cette valeur en fonction de la hauteur de ta navbar */
+}
+
+/* Contenu principal sous la navbar */
+main {
+    width: 100%;
+    text-align: center; /* Centrer le texte */
+    color: white;
+	background-color: black;
+    min-height: 100vh; /* S'assurer que le contenu prend toute la hauteur */
+
+

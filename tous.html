@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liste Voitures</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  
+  <!-- Styles personnalisés -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stylesSwiper.css">
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="projet.html">Accueil</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Modèles</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="occasion.html">Voiture d'occasion</a></li>
+                            <li><a class="dropdown-item" href="sport.html">Voiture Sport</a></li>
+                            <li><a class="dropdown-item" href="jours.html">Voiture de tous les jours</a></li>
+                            <li><a class="dropdown-item" href="tous.html">Tous les véhicules</a></li>
+                        </ul>
+                    </li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Contactez-nous</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="carte.html">Trouver une concession</a></li>
+								<li><a class="dropdown-item" href="calendrier.html">Prendre un rdv </a></li>
+						</ul>
+					</li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+  <main>
+	<section class="container mt-5">
+		<h2 class="text-center">Nos véhicules</h2>
+
+	  <!-- Swiper -->
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <!-- Les Slides -->
+          <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 1</h5>
+          </div>
+		  
+          <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 2</h5>
+          </div>
+		  
+          <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 3</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 4</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 5</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 6</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 7</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 8</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 9</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 10</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 11</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 12</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 13</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 14</h5>
+          </div>
+		  
+		  <div class="swiper-slide">
+            <img src="Maquette.jpg" class="img-fluid">
+            <h5 class="text-center">Voiture 15</h5>
+          </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+        
+        <!-- Navigation -->
+        <div class="swiper-button-next"></div>  <!-- Flèche suivante -->
+        <div class="swiper-button-prev"></div>  <!-- Flèche précédente -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Bootstrap JS avec Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialiser Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      loop: true,
+	  slidesPerView: 3,
+      spaceBetween: 30,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
