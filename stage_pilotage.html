@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://apis.google.com/js/api.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </head>
 <body>
     <div class="container-fluid">
@@ -43,6 +46,35 @@
             <h1>Réservez votre stage de pilotage</h1>
             <div id="calendar"></div>
             <div id="weather"></div>
+			<div id="map" style="height: 400px;"></div>
+			<main class="container mt-4">
+        <!-- Recherche -->
+        <div class="row mb-3">
+            <div class="col-md-6 mb-2">
+                <input type="text" id="addressInput" class="form-control" placeholder="Entrez une adresse ou une ville">
+            </div>
+            <div class="col-md-3 mb-2">
+                <select id="radiusSelect" class="form-select">
+                    <option value="5000">5 km</option>
+                    <option value="10000" selected>10 km</option>
+                    <option value="20000">20 km</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" onclick="searchAddress()">Rechercher</button>
+            </div>
+        </div>
+
+        <!-- Carte -->
+        <div id="map"></div>
+
+        <!-- Liste des concessions -->
+        <div id="concessionList" class="mt-4">
+            <h5>Concessions trouvées :</h5>
+            <ul class="list-group" id="listItems"></ul>
+        </div>
+    </main>
+
             
             <div class="container my-5">
                 <h2>Prendre un rendez-vous</h2>
@@ -109,9 +141,112 @@
 
 fetchWeather();
 
-
         </script>
-        
+        <script>
+        // Carte
+        var map = L.map('map').setView([48.8566, 2.3522], 12); // Paris par défaut
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var markersLayer = L.layerGroup().addTo(map);
+        var markerList = [];  // Stocke les références des marqueurs pour centrer sur eux
+
+        function searchAddress() {
+            var address = document.getElementById('addressInput').value;
+            var radius = document.getElementById('radiusSelect').value;
+
+            if (!address) return;
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var lat = parseFloat(data[0].lat);
+                        var lon = parseFloat(data[0].lon);
+
+                        map.setView([lat, lon], 13);
+                        markersLayer.clearLayers();
+                        markerList = [];
+                        document.getElementById('listItems').innerHTML = ""; // Vide la liste
+
+                        searchConcessions(lat, lon, radius);
+                    } else {
+                        alert("Adresse non trouvée !");
+                    }
+                });
+        }
+
+        function searchConcessions(lat, lon, radius) {
+            var overpassUrl = 'https://overpass-api.de/api/interpreter';
+
+            var query = `
+                [out:json];
+                node(around:${radius},${lat},${lon})["brand"~"Alfa Romeo",i]["shop"="car"];
+                out;
+            `;
+
+            fetch(overpassUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'data=' + encodeURIComponent(query)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var listContainer = document.getElementById('listItems');
+                listContainer.innerHTML = ""; // Clear list
+                markersLayer.clearLayers();
+                markerList = [];
+
+                if (data.elements.length === 0) {
+                    alert("Aucune concession Alfa Romeo trouvée à proximité.");
+                    return;
+                }
+
+                // Afficher le nombre de concessions trouvées
+                var count = data.elements.length;
+                document.getElementById('concessionList').querySelector('h5').textContent = `Concessions trouvées : ${count}`;
+
+                data.elements.forEach(function(el, index) {
+                    var name = el.tags.name || "Concession Alfa Romeo";
+                    var street = el.tags['addr:street'] || "";
+                    var city = el.tags['addr:city'] || "";
+                    var postcode = el.tags['addr:postcode'] || "";
+                    var address = `${street}, ${city} ${postcode}`.trim();
+                    var popupContent = `<strong>${name}</strong><br>${address}`;
+
+                    // Ajouter un marqueur sur la carte
+                    var marker = L.marker([el.lat, el.lon]).addTo(markersLayer)
+                        .bindPopup(popupContent);
+
+                    markerList.push(marker);
+
+                    // Ajouter à la liste
+                    var listItem = document.createElement('li');
+                    listItem.className = "list-group-item";
+                    listItem.innerHTML = `<strong>${name}</strong><br>${address}`;
+                    listItem.onclick = function() {
+                        map.setView([el.lat, el.lon], 15);  // Centrer sur le marqueur
+                        marker.openPopup();  // Ouvrir le popup
+                    };
+                    listContainer.appendChild(listItem);
+                });
+
+                // Si une seule concession trouvée : zoom dessus
+                if (count === 1) {
+                    var first = data.elements[0];
+                    map.setView([first.lat, first.lon], 15);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur Overpass API:", error);
+                alert("Erreur lors de la recherche des concessions.");
+            });
+        }
+    </script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </div>
 </body>
