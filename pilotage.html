@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage de Pilotage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" href="projet.html">Accueil</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Modèles</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="occasion.html">Voiture d'occasion</a></li>
+                                <li><a class="dropdown-item" href="sport.html">Voiture Sport</a></li>
+                                <li><a class="dropdown-item" href="jours.html">Voiture de tous les jours</a></li>
+                                <li><a class="dropdown-item" href="tous.html">Tous les véhicules</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Contactez-nous</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="carte.html">Trouver une concession</a></li>
+                                <li><a class="dropdown-item" href="calendrier.html">Prendre un rdv</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="pilotage.html">Stage de pilotage</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage de Pilotage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="projet.html">Accueil</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Modèles</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="electrique.html">Voiture électrique</a></li>
+                            <li><a class="dropdown-item" href="essence.html">Voiture Essence</a></li>
+                            <li><a class="dropdown-item" href="hybride.html">Voiture Hybride</a></li>
+                            <li><a class="dropdown-item" href="tous.html">Tous les véhicules</a></li>
+							
+                        </ul>
+                    </li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Contactez-nous</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="carte.html">Trouver une concession</a></li>
+								<li><a class="dropdown-item" href="calendrier.html">Prendre un rdv </a></li>
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-link active" href="pilotage.html">Stage de pilotage</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+        <main class="container mt-4">
+            <!-- Barre de recherche en haut -->
+            <section class="search-section">
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-2">
+                        <input type="text" id="addressInput" class="form-control" placeholder="Entrez une adresse ou une ville" aria-label="Entrez une adresse ou une ville">
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select id="radiusSelect" class="form-select" aria-label="Sélectionnez un rayon de recherche">
+                            <option value="5000">5 km</option>
+                            <option value="10000" selected>10 km</option>
+                            <option value="20000">20 km</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary w-100" onclick="searchAddress()">Rechercher</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carte -->
+            <section id="mapSection" class="mt-4">
+                <div id="map" style="height: 400px;"></div>
+            </section>
+
+            <!-- Affichage de la météo -->
+            <section id="weatherSection" class="mt-4" style="display: none;">
+                <h3>Prévisions météo :</h3>
+                <div id="weather"></div>
+            </section>
+
+            <!-- Liste des concessions -->
+            <section id="concessionList" class="mt-4">
+                <h5>Concessions trouvées :</h5>
+                <ul class="list-group" id="listItems"></ul>
+            </section>
+
+            <!-- Formulaire de rendez-vous -->
+            <section class="appointment-section mt-5">
+                <h2>Prendre un rendez-vous</h2>
+                <button class="btn btn-success" onclick="window.location.href='calendrier.html'">Prendre un rendez-vous</button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Initialisation de la carte Leaflet
+        var map = L.map('map').setView([48.8566, 2.3522], 12); // Paris par défaut
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var markersLayer = L.layerGroup().addTo(map);
+        var markerList = [];  // Stocke les références des marqueurs
+
+        // Fonction de recherche d'adresse et mise à jour de la carte et de la météo
+        function searchAddress() {
+            var address = document.getElementById('addressInput').value;
+            var radius = document.getElementById('radiusSelect').value;
+
+            if (!address) return;
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var lat = parseFloat(data[0].lat);
+                        var lon = parseFloat(data[0].lon);
+
+                        // Mettre à jour la carte
+                        map.setView([lat, lon], 13);
+                        markersLayer.clearLayers(); // Supprimer les anciens marqueurs
+                        markerList = [];  // Réinitialiser la liste des marqueurs
+                        document.getElementById('listItems').innerHTML = ""; // Vider la liste des concessions
+
+                        // Chercher les concessions à proximité
+                        searchConcessions(lat, lon, radius);
+
+                        // Récupérer la météo pour le lieu recherché
+                        fetchWeather(lat, lon);
+
+                        // Afficher la section météo
+                        document.getElementById('weatherSection').style.display = 'block';
+                    } else {
+                        window.location.href = 'existepas2.html';
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur API Nominatim:", error);
+                    window.location.href = 'erreur2.html';
+					
+                });
+        }
+
+        // Fonction pour récupérer les prévisions météo à partir de l'API OpenWeather
+        function fetchWeather(lat, lon) {
+            const apiKey = '7e60abb44046f3aee137beb3c3cb6d3f'; 
+            const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=fr`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let forecastHtml = '<ul>';
+                    const forecastDays = {};
+
+                    // Organiser les prévisions par jour
+                    data.list.forEach(entry => {
+                        const date = entry.dt_txt.split(' ')[0]; // Extraire uniquement la date
+                        if (!forecastDays[date]) {
+                            forecastDays[date] = entry;
+                        }
+                    });
+
+                    // Afficher les prévisions pour chaque jour
+                    for (const date in forecastDays) {
+                        const entry = forecastDays[date];
+                        const formattedDate = new Date(date).toLocaleDateString("fr-FR", { 
+                            weekday: "long", 
+                            day: "numeric", 
+                            month: "long" 
+                        });
+                        forecastHtml += `<li><strong>${formattedDate}</strong>: ${entry.weather[0].description}, ${entry.main.temp}°C</li>`;
+                    }
+                    forecastHtml += '</ul>';
+                    document.getElementById('weather').innerHTML = forecastHtml;
+                })
+                .catch(err => document.getElementById('weather').innerHTML = "Erreur de récupération des prévisions météo.");
+        }
+
+        // Fonction pour afficher les concessions
+        function searchConcessions(lat, lon, radius) {
+            var overpassUrl = 'https://overpass-api.de/api/interpreter';
+
+            var query = `
+                [out:json];
+                node(around:${radius},${lat},${lon})["brand"~"Alfa Romeo",i]["shop"="car"];
+                out;
+            `;
+
+            fetch(overpassUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'data=' + encodeURIComponent(query)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var listContainer = document.getElementById('listItems');
+                listContainer.innerHTML = ""; // Clear list
+                markersLayer.clearLayers();
+                markerList = [];
+
+                if (data.elements.length === 0) {
+                    window.location.href = 'Yapas2.html';;
+                    return;
+                }
+
+                // Afficher le nombre de concessions trouvées
+                var count = data.elements.length;
+                document.getElementById('concessionList').querySelector('h5').textContent = `Concessions trouvées : ${count}`;
+
+                data.elements.forEach(function(el, index) {
+                    var name = el.tags.name || "Concession Alfa Romeo";
+                    var street = el.tags['addr:street'] || "";
+                    var city = el.tags['addr:city'] || "";
+                    var postcode = el.tags['addr:postcode'] || "";
+                    var address = `${street}, ${city} ${postcode}`.trim();
+                    var popupContent = `<strong>${name}</strong><br>${address}`;
+
+                    // Ajouter un marqueur sur la carte
+                    var marker = L.marker([el.lat, el.lon]).addTo(markersLayer)
+                        .bindPopup(popupContent);
+
+                    markerList.push(marker);
+
+                    // Ajouter à la liste
+                    var listItem = document.createElement('li');
+                    listItem.className = "list-group-item";
+                    listItem.innerHTML = `<strong>${name}</strong><br>${address}`;
+                    listItem.onclick = function() {
+                        map.setView([el.lat, el.lon], 15);  // Centrer sur le marqueur
+                        marker.openPopup();  // Ouvrir le popup
+                    };
+                    listContainer.appendChild(listItem);
+                });
+
+                // Si une seule concession trouvée : zoom dessus
+                if (count === 1) {
+                    var first = data.elements[0];
+                    map.setView([first.lat, first.lon], 15);
+                }
+            })
+            .catch(error => {
+                    console.error("Erreur API Nominatim:", error);
+                    window.location.href = 'erreur2.html';
+					
+                });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
